@@ -1,4 +1,4 @@
-![Image of Yaktocat](http://dev.webf8.net/opendesk_logo_blue.png)
+![opendesk logo](http://dev.webf8.net/opendesk_logo_blue.png)
 # opendesk API
 API for opendesk the opensource hotel reservation managment system. 
 The API is build using Lumen Framework
