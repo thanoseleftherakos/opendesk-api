@@ -1,6 +1,6 @@
 # opendesk API
 API for opendesk the opensource hotel reservation managment system. 
-The API is build using Lumen Frameworl 
+The API is build using Lumen Framework
 
 ## API Reference
 base url: http://dev.webf8.net/hotelapi/public
