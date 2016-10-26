@@ -12,6 +12,7 @@
 */
 use App\Functions\Calculations;
 use App\User;
+use App\Reservation;
 
 $app->get('/', function () use ($app) {
     return $app->version();
@@ -48,6 +49,10 @@ $app->group(['middleware' => 'auth:api'], function($app)
     $app->put('/reservations/{id}','App\Http\Controllers\ReservationController@update');
     $app->delete('/reservations/{id}','App\Http\Controllers\ReservationController@destroy');
     $app->post('/reservations/search','App\Http\Controllers\ReservationController@search');
+
+    ////Statistics Routes
+    $app->post('/statistics','App\Http\Controllers\HotelController@stats');
+    
 
 
 });

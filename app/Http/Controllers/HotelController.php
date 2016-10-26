@@ -157,6 +157,35 @@ class HotelController extends Controller
         return $this->createResponse($hotel,'Settings updated successfully',200);
     }
 
+
+    public function stats(Request $request){
+        $from = $request['from_date'];
+        $to = $request['to_date'];
+        $hotel = Hotel::find(Auth::user()->hotel->id);
+        $countries = DB::table('reservations')
+                ->where('hotel_id',$hotel->id)
+                ->where('status_id',1)
+                ->whereDate('check_in', '<=', $to) 
+                ->whereDate('check_out', '>', $from)
+                ->select('country', DB::raw('count(*) as total'))
+                ->groupBy('country')
+                ->get();
+        $countries_count = DB::table('reservations')
+                        ->where('hotel_id',$hotel->id)
+                        ->whereDate('check_in', '<=', $to) 
+                        ->whereDate('check_out', '>', $from)
+                        ->where('status_id',1)->count();      
+
+        foreach ($countries as $key => $country) {
+            $countries[$key]->total = round($country->total * 100 / $countries_count, 2);
+        }
+        $response = array(
+            'countries' => $countries,
+        );
+        
+        return $this->createResponse($response,'',200);
+    }
+
     
 
     
