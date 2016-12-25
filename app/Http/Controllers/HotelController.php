@@ -42,20 +42,20 @@ class HotelController extends Controller
 
         if($hotel){
             $total_reservations = Reservation::where('hotel_id',$hotel->id)->with('room')->count();
-            $arivals_today = Reservation::where('status_id','1')->whereDate('check_in','=',date($today))->with('room')->get();
-            $arivals_today_count = Reservation::where('status_id','1')->whereDate('check_in','=',date($today))->count();
+            $arivals_today = Reservation::where('hotel_id',$hotel->id)->where('status_id','1')->whereDate('check_in','=',date($today))->with('room')->get();
+            $arivals_today_count = Reservation::where('hotel_id',$hotel->id)->where('status_id','1')->whereDate('check_in','=',date($today))->count();
             // $arivals_tomorrow = Reservation::where('status_id','1')->whereDate('check_in','=',date($today,  strtotime("+1 day")))->with('room')->get();
-            $departures_today = Reservation::where('status_id','1')->whereDate('check_out','=',date($today))->with('room')->get();
-            $departures_today_count = Reservation::where('status_id','1')->whereDate('check_out','=',date($today))->count();
+            $departures_today = Reservation::where('hotel_id',$hotel->id)->where('status_id','1')->whereDate('check_out','=',date($today))->with('room')->get();
+            $departures_today_count = Reservation::where('hotel_id',$hotel->id)->where('status_id','1')->whereDate('check_out','=',date($today))->count();
             // $departures_tomorrow = Reservation::where('status_id','1')->whereDate('check_out','=',date($today,  strtotime("+1 day")))->with('room')->get();
-            $total_earnings = Reservation::where('status_id','1')->sum('total_price');
+            $total_earnings = Reservation::where('hotel_id',$hotel->id)->where('status_id','1')->sum('total_price');
             $current_rooms_query = Reservation::where('status_id','1')
                                         ->whereDate('check_in', '<=', date($today))
                                         ->whereDate('check_out', '>', date($today));
             $available_rooms_today = $hotel->total_rooms - $current_rooms_query->count();
             $status_types = StatusType::all();
             $current_rooms = $current_rooms_query->with('room')->with('channel')->with('statusType')->get();
-            $chart_old = \DB::table('reservations')->where('status_id','1')
+            $chart_old = \DB::table('reservations')->where('status_id','1')->where('hotel_id',$hotel->id)
                 ->whereYear('check_out', '=', date("Y"))
                 ->selectRaw('month(check_out) as month, sum(total_price) as sum, count(*) as total')
                 ->groupBy(DB::raw('month desc'))

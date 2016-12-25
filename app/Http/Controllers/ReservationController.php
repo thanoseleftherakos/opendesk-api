@@ -140,19 +140,19 @@ class ReservationController extends Controller
         } 
         
         if($type == 'arr_date') {
-            $query = $query->where('check_in', '>=', $stay_from)->where('check_in', '<=', $stay_to);
+            $query = $query->where('hotel_id',$this->hotel_id)->where('check_in', '>=', $stay_from)->where('check_in', '<=', $stay_to);
             
         }
         if($type == 'rs_date') {
-            $query = $query->where('created_at', '>=', $stay_from)->where('created_at', '<=', $stay_to);
+            $query = $query->where('hotel_id',$this->hotel_id)->where('created_at', '>=', $stay_from)->where('created_at', '<=', $stay_to);
 
         }
         if($type == 'dp_date') {
-            $query = $query->where('check_out', '>=', $stay_from)->where('check_out', '<=', $stay_to);
+            $query = $query->where('hotel_id',$this->hotel_id)->where('check_out', '>=', $stay_from)->where('check_out', '<=', $stay_to);
         }
 
         if($request->input('query')){
-            $query->where('client_name', 'LIKE', '%' . $request->input('query') . '%' )
+            $query->where('hotel_id',$this->hotel_id)->where('client_name', 'LIKE', '%' . $request->input('query') . '%' )
                           ->orWhere('client_email', 'LIKE', '%' . $request->input('query') . '%')
                           ->orWhere('ref_id', 'LIKE', '%' . $request->input('query') . '%');
         }
