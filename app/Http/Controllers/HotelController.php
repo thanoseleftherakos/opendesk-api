@@ -84,17 +84,17 @@ class HotelController extends Controller
     }
 
     public function getRoomTypes(){
-        $hotel = Hotel::find(Auth::user()->hotel->id);
+        $hotel = Hotel::where('id',Auth::user()->hotel->id)->first();
         $room_types = $hotel->room_types;
         return $this->createResponse($room_types,'',200);
     }
 
     public function settings() {
-        $hotel = Hotel::find(Auth::user()->hotel->id)->with('room_types')->first();
+        $hotel = Hotel::where('id',Auth::user()->hotel->id)->with('room_types')->first();
         return $this->createResponse($hotel,'',200);
     }
     public function updateSettings(Request $request) {
-        $hotel = Hotel::find(Auth::user()->hotel->id)->with('room_types')->first();
+        $hotel = Hotel::where('id',Auth::user()->hotel->id)->with('room_types')->first();
 
         $file = $request->file('logo');
         if($file){

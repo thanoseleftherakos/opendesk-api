@@ -19,17 +19,6 @@ $app->get('/', function () use ($app) {
     return $app->version();
 });
 
-$app->get('/create', function () use ($app) {
-    $user = Auth::user()->hotel->id;
-    // $hotel = new App\Hotel;
-    // $hotel->user_id;
-    // $hotel->name = "Sunny Garden";
-    // $hotel->total_rooms = 14;
-    // $hotel->save();
-    return $user;
-    
-});
-
 $app->group(['middleware' => ['throttle']], function($app)
 {
     $app->post('/auth/login', 'App\Http\Controllers\AuthController@postLogin');
