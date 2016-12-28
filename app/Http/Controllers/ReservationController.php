@@ -140,15 +140,15 @@ class ReservationController extends Controller
         } 
         
         if($type == 'arr_date') {
-            $query = $query->where('hotel_id',$this->hotel_id)->where('check_in', '>=', $stay_from)->where('check_in', '<=', $stay_to);
+            $query = $query->where('hotel_id',$this->hotel_id)->where('check_in', '>=', $stay_from)->where('check_in', '<=', $stay_to)->orderBy('check_in', 'asc');
             
         }
         if($type == 'rs_date') {
-            $query = $query->where('hotel_id',$this->hotel_id)->where('created_at', '>=', $stay_from)->where('created_at', '<=', $stay_to);
+            $query = $query->where('hotel_id',$this->hotel_id)->where('created_at', '>=', $stay_from)->where('created_at', '<=', $stay_to)->orderBy('created_at', 'asc');
 
         }
         if($type == 'dp_date') {
-            $query = $query->where('hotel_id',$this->hotel_id)->where('check_out', '>=', $stay_from)->where('check_out', '<=', $stay_to);
+            $query = $query->where('hotel_id',$this->hotel_id)->where('check_out', '>=', $stay_from)->where('check_out', '<=', $stay_to)->orderBy('check_out', 'asc');
         }
 
         if($request->input('query')){
